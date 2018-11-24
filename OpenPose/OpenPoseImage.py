@@ -2,7 +2,7 @@ import cv2
 import time
 import numpy as np
 
-MODE = "COCO"
+MODE = "MPI"
 
 if MODE is "COCO":
     protoFile = "pose/coco/pose_deploy_linevec.prototxt"
@@ -17,7 +17,7 @@ elif MODE is "MPI" :
     POSE_PAIRS = [[0,1], [1,2], [2,3], [3,4], [1,5], [5,6], [6,7], [1,14], [14,8], [8,9], [9,10], [14,11], [11,12], [12,13] ]
 
 
-frame = cv2.imread("single.jpeg")
+frame = cv2.imread("./images/vrksasana3.jpg")
 frameCopy = np.copy(frame)
 frameWidth = frame.shape[1]
 frameHeight = frame.shape[0]
@@ -72,7 +72,6 @@ for pair in POSE_PAIRS:
         cv2.line(frame, points[partA], points[partB], (0, 255, 255), 2)
         cv2.circle(frame, points[partA], 8, (0, 0, 255), thickness=-1, lineType=cv2.FILLED)
 
-
 cv2.imshow('Output-Keypoints', frameCopy)
 cv2.imshow('Output-Skeleton', frame)
 
@@ -80,7 +79,9 @@ cv2.imshow('Output-Skeleton', frame)
 cv2.imwrite('Output-Keypoints.jpg', frameCopy)
 cv2.imwrite('Output-Skeleton.jpg', frame)
 
-print("Total time taken : {:.3f}".format(time.time() - t))
+print("Total time taken : {:.3f}\n".format(time.time() - t))
+print("Pose Pairs:\n")
+print(points)
 
-cv2.waitKey(0)
+cv2.waitKey(1)
 
