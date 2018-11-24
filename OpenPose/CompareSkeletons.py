@@ -41,6 +41,7 @@ threshold = 0.1
 cv2.circle(frame, (200,300), 400, (255, 255, 255), thickness=-1, lineType=cv2.FILLED)
 
 corrections = {}
+directions = {}
 
 # Calculate diferences in inclination for all connections
 for pair in POSE_PAIRS:
@@ -64,19 +65,24 @@ for pair in POSE_PAIRS:
         else: 
             diff = abs(incl_1 - incl_2)
             
-        print(diff)
-        if diff > 0.5:
+        #print(diff)
+        if partA == 8 or partA == 11:
+            thr = 0.8
+        else:
+            thr = 0.5
+        if diff > thr:
             print("Massa diferent en el punt ", partA, " : ", partB )
             if diff > 1:
                 corrections[partA] = 2
             else:
                 corrections[partA] = 1
+            directions[partA] = "to the left."
+            # separar casos de cos i cap dels altres i mirar l angle de les pendents per saber cap on pivotar respecte del que pivota
         else:
             corrections[partA] = 0
         
-        
-        
-        #··· PRINT CHIVATO ···#  
+
+        # PRINT CHIVATO #  
         pA0 = points_1[partA][0] + points_2[14][0] - points_1[14][0]
         pA1 = points_1[partA][1] + points_2[14][1] - points_1[14][1]
         pB0 = points_1[partB][0] + points_2[14][0] - points_1[14][0]
