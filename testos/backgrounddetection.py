@@ -4,7 +4,7 @@ import time
 
 cap = cv2.VideoCapture(2)
 
-factor = 4
+factor = 2.5
 
 fgbg = cv2.createBackgroundSubtractorMOG2()
 
